@@ -1,0 +1,36 @@
+# Deployment for Identity Service Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-srv-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-srv
+  template:
+    metadata:
+      labels:
+        app: identity-srv
+    spec:
+      containers:
+        - name: identity-srv
+          image: midhunx001/flagra-identity-service:latest
+          envFrom:
+            - secretRef:
+                name: identity-srv-secret
+
+---
+# Service for Identity Service Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-srv-svc
+spec:
+  selector:
+    app: identity-srv
+  ports:
+    - name: identity-srv
+      protocol: TCP
+      port: 5001
+      targetPort: 5001

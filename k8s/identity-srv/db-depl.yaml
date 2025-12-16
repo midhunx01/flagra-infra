@@ -1,0 +1,62 @@
+# Persistent Volume Claim for Identity Service Database
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: identity-srv-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: hostpath
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# Deployment for Identity Service Database
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-srv-db-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-srv-db
+  template:
+    metadata:
+      labels:
+        app: identity-srv-db
+    spec:
+      containers:
+        - name: identity-srv-db
+          image: postgres:18
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "devuser"
+            - name: POSTGRES_PASSWORD
+              value: "devuser@pass"
+            - name: POSTGRES_DB
+              value: "identity_srv_db"
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/18/docker
+              name: identity-srv-db-storage
+      volumes:
+        - name: identity-srv-db-storage
+          persistentVolumeClaim:
+            claimName: identity-srv-db-pvc
+
+---
+# Service for Identity Service Database
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-srv-db-svc
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: identity-srv-db

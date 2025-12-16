@@ -1,0 +1,79 @@
+# --------------------
+# Secrets (CRITICAL)
+# --------------------
+secrets.yaml
+secrets.yml
+**/secrets.yaml
+**/secrets.yml
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Kubernetes secrets
+**/*secret*.yaml
+**/*secret*.yml
+
+# --------------------
+# Terraform
+# --------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# --------------------
+# Helm
+# --------------------
+charts/**/charts/
+charts/**/values-local.yaml
+charts/**/values-prod.yaml
+charts/**/values-dev.yaml
+
+# --------------------
+# Docker
+# --------------------
+*.env
+docker-compose.override.yml
+
+# --------------------
+# Logs & temp files
+# --------------------
+logs/
+*.log
+tmp/
+temp/
+
+# --------------------
+# OS & Editor junk
+# --------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --------------------
+# Certificates & Keys
+# --------------------
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+
+# --------------------
+# Backup files
+# --------------------
+*.bak
+*.old
+*.backup

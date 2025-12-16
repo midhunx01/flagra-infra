@@ -1,0 +1,21 @@
+# Deployment for Mail Service Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-srv-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mail-srv
+  template:
+    metadata:
+      labels:
+        app: mail-srv
+    spec:
+      containers:
+        - name: mail-srv
+          image: midhunx001/flagra-mail-service:latest
+          envFrom:
+            - secretRef:
+                name: mail-srv-secret
