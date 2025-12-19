@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/limit-rps: "10" # 10 requests/sec per IP
+    nginx.ingress.kubernetes.io/limit-burst: "20" # allow short burst
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: flagra.com
+      http:
+        paths:
+          - path: /api/auth
+            pathType: Prefix
+            backend:
+              service:
+                name: identity-srv-svc
+                port:
+                  number: 5001

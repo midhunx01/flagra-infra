@@ -6,10 +6,9 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: hostpath
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
 
 ---
 # Deployment for Identity Service Database
@@ -39,6 +38,8 @@ spec:
               value: "devuser@pass"
             - name: POSTGRES_DB
               value: "identity_srv_db"
+            - name: PGDATA
+              value: /var/lib/postgresql/18/docker/data
           volumeMounts:
             - mountPath: /var/lib/postgresql/18/docker
               name: identity-srv-db-storage
