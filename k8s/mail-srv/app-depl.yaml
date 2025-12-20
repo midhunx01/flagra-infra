@@ -16,6 +16,7 @@ spec:
       containers:
         - name: mail-srv
           image: midhunx001/flagra-mail-service:latest
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: mail-srv-secret

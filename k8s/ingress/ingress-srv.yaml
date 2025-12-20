@@ -9,8 +9,8 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: flagra.com
-      http:
+    # - host: flagra.com
+    - http:
         paths:
           - path: /api/auth
             pathType: Prefix
