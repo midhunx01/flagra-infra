@@ -1,0 +1,36 @@
+# Deployment for Identity Service Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-srv-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project-srv
+  template:
+    metadata:
+      labels:
+        app: project-srv
+    spec:
+      containers:
+        - name: project-srv
+          image: midhunx001/flagra-project-service:latest
+          envFrom:
+            - secretRef:
+                name: project-srv-secret
+
+---
+# Service for Project Service Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: project-srv-svc
+spec:
+  selector:
+    app: project-srv
+  ports:
+    - name: project-srv
+      protocol: TCP
+      port: 7001
+      targetPort: 7001
