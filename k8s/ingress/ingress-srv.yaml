@@ -18,8 +18,8 @@ spec:
               service:
                 name: identity-srv-svc
                 port:
-                  number: 5001 
-        paths: 
+                  number: 5001
+
           - path: /api/project
             pathType: Prefix
             backend:

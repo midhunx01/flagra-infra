@@ -8,7 +8,6 @@ spec:
   resources:
     requests:
       storage: 10Gi
-
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,22 +24,22 @@ spec:
         app: openfga-db
     spec:
       containers:
-        - name: openfga-db
+        - name: postgres
           image: postgres:15
           ports:
             - containerPort: 5432
           env:
             - name: POSTGRES_USER
-              value: "openfga_user"
+              value: openfga_user
             - name: POSTGRES_PASSWORD
-              value: "openfga_pass"
+              value: openfga_pass
             - name: POSTGRES_DB
-              value: "openfga"
+              value: openfga
             - name: PGDATA
-              value: /var/lib/postgresql/data
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: openfga-db-storage
+            - name: openfga-db-storage
+              mountPath: /var/lib/postgresql/data
       volumes:
         - name: openfga-db-storage
           persistentVolumeClaim:

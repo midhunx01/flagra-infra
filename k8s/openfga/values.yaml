@@ -6,13 +6,7 @@ image:
 
 datastore:
   engine: postgres
-  postgres:
-    host: openfga-db-svc
-    port: 5432
-    user: openfga_user
-    password: openfga_pass
-    database: openfga
-    sslMode: disable
+  uri: "postgres://openfga_user:openfga_pass@openfga-db-svc:5432/openfga?sslmode=disable"
 
 service:
   type: ClusterIP
