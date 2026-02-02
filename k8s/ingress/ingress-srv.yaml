@@ -6,6 +6,9 @@ metadata:
     nginx.ingress.kubernetes.io/limit-rps: "10" # 10 requests/sec per IP
     nginx.ingress.kubernetes.io/limit-burst: "20" # allow short burst
     nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
 spec:
   ingressClassName: nginx
   rules:
@@ -27,3 +30,11 @@ spec:
                 name: project-srv-svc
                 port:
                   number: 7001
+
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: realtime-srv-svc
+                port:
+                  number: 4000

@@ -1,0 +1,37 @@
+# Deployment for Realtime Service Application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realtime-srv-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: realtime-srv
+  template:
+    metadata:
+      labels:
+        app: realtime-srv
+    spec:
+      containers:
+        - name: realtime-srv
+          image: midhunx001/flagra-realtime-service:latest
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: realtime-srv-secret
+
+---
+# Service for Realtime Service Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: realtime-srv-svc
+spec:
+  selector:
+    app: realtime-srv
+  ports:
+    - name: ws
+      port: 4000
+      targetPort: 4000
+  type: ClusterIP
